@@ -30,6 +30,38 @@ var svg = d3.select("body").append("svg")
     .append("g")
     .attr("transform", "translate(-.5,-.5)");
 
+function getSvgElementById(id) {
+  var svgElement = svg.select("#"+id);
+  return svgElement[0][0];
+}
+
+function getPositionOfSvgId(id) {
+  var svgElement = getSvgElementById(id);
+  var x = svgElement.getBoundingClientRect().x
+    + svgElement.getBoundingClientRect().width / 2;
+  var y = svgElement.getBoundingClientRect().y
+    + svgElement.getBoundingClientRect().height / 2;
+  return { "x" : x, "y" : y};
+}
+
+var lineFunction = d3.svg.line()
+    .x(function(d) { return d.x; })
+    .y(function(d) { return d.y; })
+    .interpolate("linear");
+
+function drawSvgElementLine(startId, endId) {
+  var lineData = [];
+  lineData.push(getPositionOfSvgId(startId));
+  lineData.push(getPositionOfSvgId(endId));
+  svg.append("path")
+      .attr("d", lineFunction(lineData))
+      .attr("stroke", "blue")
+      .attr("opacity", "0.4")
+      .attr("stroke-width",3)
+      .attr("fill", "none");
+      // .attr("stroke-dasharray", "4,4")
+}
+
 d3.json("simple.json", function(error, json) {
   if (error) throw error;
 
@@ -52,42 +84,12 @@ d3.json("simple.json", function(error, json) {
       .attr("text-anchor", "middle")
       .text(function(d) { return d.children ? null : d.name; });
 
-  var four = svg.select("#four");
-  four.style("stroke-width", 8);
+  drawSvgElementLine("four", "five");
+  drawSvgElementLine("two","three");
 
-  var five = svg.select("#five");
-  five.style("stroke-width", 8);
-
-  // console.log(">>>: " , svg.select("#four"));
-  // console.log(">>>: " , four[0][0]);
-  // console.log(">>>: " , four[0][0].getBBox());
-  // console.log(">>>: " , four[0][0].getBoundingClientRect());
-  // console.log(">>>: " , four[0][0].getBoundingClientRect().x);
-
-  // { "x": four[0][0].getBoundingClientRect().x, "y": four[0][0].getBoundingClientRect().y},
-
-  var fourX = four[0][0].getBoundingClientRect().x
-    + four[0][0].getBoundingClientRect().width / 2;
-  var fourY = four[0][0].getBoundingClientRect().y
-    + four[0][0].getBoundingClientRect().height / 2;
-  var fiveX = five[0][0].getBoundingClientRect().x
-    + five[0][0].getBoundingClientRect().width / 2;
-  var fiveY = five[0][0].getBoundingClientRect().y
-    + five[0][0].getBoundingClientRect().height / 2;
-  var lineData = [
-      { "x": fourX, "y": fourY},
-      { "x": fiveX, "y": fiveY}
-    ];
-  var lineFunction = d3.svg.line()
-      .x(function(d) { return d.x; })
-      .y(function(d) { return d.y; })
-      .interpolate("linear");
-
-  svg.append("path")
-      .attr("d", lineFunction(lineData))
-      .attr("stroke", "blue")
-      .attr("stroke-width",8)
-      .attr("fill", "none");
+  drawSvgElementLine("one", "five");
+  drawSvgElementLine("two", "five");
+  drawSvgElementLine("three", "five");
 
 });
 
