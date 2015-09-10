@@ -1,0 +1,39 @@
+{
+ "name": "root",
+ "children": [
+  {
+   "name": "foo",
+   "children": [
+    {
+     "name": "red",
+     "children": [
+      {"name": "one", "size": 3938},
+      {"name": "two", "size": 3812}
+     ]
+    },
+    {
+     "name": "blue",
+     "children": [
+      {"name": "three", "size": 3534},
+      {"name": "four", "size": 5731}
+     ]
+    }
+   ]
+  },
+  {
+   "name": "bar",
+   "children": [
+    {"name": "five", "size": 17010},
+    {"name": "six", "size": 5842},
+    {
+     "name": "bla",
+     "children": [
+      {"name": "seven", "size": 1983},
+      {"name": "eight", "size": 1983},
+      {"name": "nine", "size": 2047}
+     ]
+    }
+   ]
+  }
+ ]
+}
