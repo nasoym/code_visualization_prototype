@@ -1,0 +1,106 @@
+{
+  "parent": "..",
+  "path": "",
+  "name": "dirtree",
+  "type": "directory",
+  "children": [
+    {
+      "parent": "",
+      "path": "lib",
+      "name": "lib",
+      "type": "directory",
+      "children": [
+        {
+          "parent": "lib",
+          "path": "lib/index.js",
+          "name": "index.js",
+          "type": "file"
+        }
+      ]
+    },
+    {
+      "parent": "",
+      "path": "node_modules",
+      "name": "node_modules",
+      "type": "directory",
+      "children": [
+        {
+          "parent": "node_modules",
+          "path": "node_modules/flat",
+          "name": "flat",
+          "type": "directory",
+          "children": [
+            {
+              "parent": "node_modules/flat",
+              "path": "node_modules/flat/test",
+              "name": "test",
+              "type": "directory",
+              "children": [
+                {
+                  "parent": "node_modules/flat/test",
+                  "path": "node_modules/flat/test/test.js",
+                  "name": "test.js",
+                  "type": "file"
+                }
+              ]
+            },
+            {
+              "parent": "node_modules/flat",
+              "path": "node_modules/flat/.npmignore",
+              "name": ".npmignore",
+              "type": "file"
+            },
+            {
+              "parent": "node_modules/flat",
+              "path": "node_modules/flat/.travis.yml",
+              "name": ".travis.yml",
+              "type": "file"
+            },
+            {
+              "parent": "node_modules/flat",
+              "path": "node_modules/flat/LICENSE",
+              "name": "LICENSE",
+              "type": "file"
+            },
+            {
+              "parent": "node_modules/flat",
+              "path": "node_modules/flat/README.md",
+              "name": "README.md",
+              "type": "file"
+            },
+            {
+              "parent": "node_modules/flat",
+              "path": "node_modules/flat/index.js",
+              "name": "index.js",
+              "type": "file"
+            },
+            {
+              "parent": "node_modules/flat",
+              "path": "node_modules/flat/package.json",
+              "name": "package.json",
+              "type": "file"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "parent": "",
+      "path": "LICENSE",
+      "name": "LICENSE",
+      "type": "file"
+    },
+    {
+      "parent": "",
+      "path": "README.md",
+      "name": "README.md",
+      "type": "file"
+    },
+    {
+      "parent": "",
+      "path": "package.json",
+      "name": "package.json",
+      "type": "file"
+    }
+  ]
+}

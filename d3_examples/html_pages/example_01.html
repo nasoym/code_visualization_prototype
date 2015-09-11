@@ -16,41 +16,53 @@ text {
 <script src="d3.min.js"></script>
 <script>
 
-var width = 960,
-    height = 500,
+var width = 3200,
+    height = 1500,
     color = d3.scale.category20c();
 
 var treemap = d3.layout.treemap()
-    .padding(4)
+    // .padding(4)
+    .padding(9)
     .size([width, height])
-    .value(function(d) { return d.size; });
+    .value(function(d) { return 1; });
+    // .value(function(d) { return d.size; });
+    // .value(function(d) { return d.size; });
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height)
-  .append("g")
+    .append("g")
     .attr("transform", "translate(-.5,-.5)");
 
-d3.json("simple.json", function(error, json) {
+d3.json("files.json", function(error, json) {
   if (error) throw error;
 
   var cell = svg.data([json]).selectAll("g")
       .data(treemap.nodes)
-    .enter().append("g")
+      .enter().append("g")
       .attr("class", "cell")
       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
   cell.append("rect")
       .attr("width", function(d) { return d.dx; })
       .attr("height", function(d) { return d.dy; })
-      .style("fill", function(d) { return d.children ? color(d.name) : null; });
+      .style("fill", function(d) { return d.children ? color(d.name) : null; })
+      ;
 
   cell.append("text")
-      .attr("x", function(d) { return d.dx / 2; })
-      .attr("y", function(d) { return d.dy / 2; })
+      .attr("x", function(d) { return d.children ? 0 : d.dx / 2; })
+      .attr("y", function(d) { return d.children ? 0 : d.dy / 2; })
+      // .attr("x", function(d) { return d.dx / 2; })
+      // .attr("y", function(d) { return d.dy / 2; })
       .attr("dy", ".35em")
-      .attr("text-anchor", "middle")
-      .text(function(d) { return d.children ? null : d.name; });
+      .style("font-size", function(d) { return d.children ? "12px": "8px";})
+      .attr("text-anchor", function(d) { return d.children ? "start": "middle";})
+      // .attr("text-anchor", "middle")
+      .text(function(d) { return d.children ? d.name : d.name; });
+      // .text(function(d) { return d.name; })
+      // .text("bla")
+      ;
+      // .text(function(d) { return d.children ? null : d.name; });
 });
 
 </script>
