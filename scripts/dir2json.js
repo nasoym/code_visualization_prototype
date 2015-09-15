@@ -26,10 +26,12 @@ function dirTree(filename) {
         // console.log(filename);
         // console.log( JSON.stringify(stats));
         info.size = folderSize(filename);
+        info.childrensize = 0;
 
         info.children = fs.readdirSync(filename).map(function(child) {
             return dirTree(filename + '/' + child);
         });
+        info.childrensize = info.children.length;
     } else if (stats.isFile()) {
         // Assuming it's a file. In real life it could be a symlink or
         // something else!
