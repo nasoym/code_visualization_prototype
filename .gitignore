@@ -1,3 +1,4 @@
-d3_examples/html_pages/d3.js
-d3_examples/html_pages/d3.min.js
 node_modules/
+treemap_pages/data/
+d3.js
+d3.min.js
