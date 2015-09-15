@@ -1,0 +1,62 @@
+{
+  "path": "root",
+  "name": "root",
+  "type": "folder",
+  "size": 90,
+  "children": [
+    {
+      "path": "root/A",
+      "name": "A",
+      "type": "folder",
+      "size": 40,
+      "children": [
+        {
+          "path": "root/A/index.html",
+          "name": "index.html",
+          "type": "file",
+          "size": 10
+        },
+        {
+          "path": "root/A/page.html",
+          "name": "page.html",
+          "type": "file",
+          "size": 30
+        }
+      ]
+    },
+    {
+      "path": "root/B",
+      "name": "B",
+      "type": "folder",
+      "size": 30,
+      "children": [
+        {
+          "path": "root/B/d3.js",
+          "name": "d3.js",
+          "type": "file",
+          "size": 30
+        }
+      ]
+    },
+    {
+      "path": "root/C",
+      "name": "C",
+      "type": "folder",
+      "size": 20,
+      "children": [
+        {
+          "path": "root/C/index.html",
+          "name": "index.html",
+          "type": "file",
+          "size": 5
+        },
+        {
+          "path": "root/C/hello.html",
+          "name": "hello.html",
+          "type": "file",
+          "size": 15
+        }
+      ]
+    }
+  ]
+}
