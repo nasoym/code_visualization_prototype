@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var fs = require('fs'),
   path = require('path')
 var exec = require('sync-exec');

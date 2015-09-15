@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var dirToJson = require('dir-to-json');
 // dirToJson("./node_modules/dirtree", {}, function( err, dirTree ){
 dirToJson("/Users/sinangoo/repos/hypoport/ep2_cleaned/", {}, function( err, dirTree ){
