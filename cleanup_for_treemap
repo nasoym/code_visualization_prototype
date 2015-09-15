@@ -1,0 +1,21 @@
+#!/bin/bash
+
+find . -name "*.bson" -delete
+find . -name "*.7z" -delete
+find . -name "*.jar" -delete
+find . -name "*.jpg" -delete
+find . -name "*.png" -delete
+find . -name "*.tiff" -delete
+find . -name "*.pdf" -delete
+find . -name "*.min.js" -delete
+find . -name "*.tif" -delete
+find . -name "*.msg" -delete
+find . -name "*_v*.json" -delete
+find . -name "*.xcf" -delete
+find . -name "beispielAngebot*.json" -delete
+find . -name "*.xls" -delete
+find . -type f | grep bootstrap | xargs -I% rm %
+find . -type f | grep jquery | xargs -I% rm %
+find . -type f | grep jasmine | xargs -I% rm %
+rm -rf vorgangsmanagement
+
