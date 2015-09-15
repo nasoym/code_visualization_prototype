@@ -1,6 +1,5 @@
 # Code Visualization
 
-
 ## node file structure to json
 
 http://stackoverflow.com/questions/11194287/convert-a-directory-structure-in-the-filesystem-to-json-with-node-js
@@ -11,7 +10,12 @@ https://www.npmjs.com/package/dir-to-json
 https://www.npmjs.com/package/gulp-directory-map
 https://www.npmjs.com/package/gulp-json-tree
 
-
 * <http://zurb.com/forrst/posts/Generate_a_JSON_list_based_on_files_in_a_directo-GDc>
 * <http://stackoverflow.com/questions/28624707/efficient-function-for-creating-json-data-from-file-directory-structure>
+
+## read file structure to json
+* <http://stackoverflow.com/questions/11194287/convert-a-directory-structure-in-the-filesystem-to-json-with-node-js>
+
+## npm packages
+* <https://www.npmjs.com/package/sync-exec>
 
