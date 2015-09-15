@@ -1,0 +1,52 @@
+{
+  "path": "root",
+  "name": "root",
+  "type": "folder",
+  "size": 20,
+  "children": [
+    {
+      "path": "root/A",
+      "name": "A",
+      "type": "folder",
+      "size": 10,
+      "children": [
+        {
+          "path": "root/A/foo",
+          "name": "foo",
+          "type": "folder",
+          "size": 10,
+          "children": [
+            {
+              "path": "root/A/foo/bar",
+              "name": "bar",
+              "type": "folder",
+              "size": 10,
+              "children": [
+                {
+                  "path": "root/A/foo/bar/stuff",
+                  "name": "stuff",
+                  "type": "file",
+                  "size": 10
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "root/B",
+      "name": "B",
+      "type": "folder",
+      "size": 10,
+      "children": [
+        {
+          "path": "root/B/bla.txt",
+          "name": "bla.txt",
+          "type": "file",
+          "size": 10
+        }
+      ]
+    }
+  ]
+}
