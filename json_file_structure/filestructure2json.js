@@ -1,5 +1,16 @@
 var fs = require('fs'),
   path = require('path')
+var exec = require('sync-exec');
+
+function folderSize(path) {
+  var size = exec('gdu -shb ' + path).stdout;
+  size = size.replace(/\n$/g, '');
+  size = size.replace(/\t/g, ' ');
+  size = size.replace(/^ */g, '');
+  size = size.split(' ')[0];
+  size = parseInt(size);
+  return size;
+}
 
 function dirTree(filename) {
     var stats = fs.lstatSync(filename),
@@ -12,6 +23,8 @@ function dirTree(filename) {
         info.type = "folder";
         // console.log(filename);
         // console.log( JSON.stringify(stats));
+        info.size = folderSize(filename);
+
         info.children = fs.readdirSync(filename).map(function(child) {
             return dirTree(filename + '/' + child);
         });
