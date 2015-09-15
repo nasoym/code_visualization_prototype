@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+./scripts/dir2json.js ~/repos/hypoport/ep2_treemap_folder > treemap_pages/data/ep2_treemap.json
+
+cat treemap_pages/data/ep2_treemap.json | ./scripts/flatten.js | jq '.' > treemap_pages/data/ep2_treemap_flatten.json
+
+sed \
+-e 's/\/Users\/sinangoo\/repos\/hypoport\/ep2_treemap_folder\///g' \
+-e 's/\/Users\/sinangoo\/repos\/hypoport\/ep2_treemap_folder//g' \
+-i'-e' \
+./treemap_pages/data/ep2_treemap_flatten.json
+
