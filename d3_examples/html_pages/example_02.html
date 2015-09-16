@@ -32,15 +32,21 @@ var svg = d3.select("body").append("svg")
 
 function getSvgElementById(id) {
   var svgElement = svg.select("#"+id);
+  // console.log("element: " , svgElement);
+  // console.log("element: " , svgElement[0][0]);
+  // console.log("element: " , svgElement[0][0].getBoundingClientRect());
+  // console.log("element: " , svgElement[0][0].getBoundingClientRect().top);
   return svgElement[0][0];
 }
 
 function getPositionOfSvgId(id) {
   var svgElement = getSvgElementById(id);
-  var x = svgElement.getBoundingClientRect().x
+  var x = svgElement.getBoundingClientRect().left
     + svgElement.getBoundingClientRect().width / 2;
-  var y = svgElement.getBoundingClientRect().y
+  var y = svgElement.getBoundingClientRect().top
     + svgElement.getBoundingClientRect().height / 2;
+  // console.log("x: " , x);
+  // console.log("y: " , y);
   return { "x" : x, "y" : y};
 }
 
@@ -53,13 +59,15 @@ function drawSvgElementLine(startId, endId) {
   var lineData = [];
   lineData.push(getPositionOfSvgId(startId));
   lineData.push(getPositionOfSvgId(endId));
+  // console.log("lineData: " , lineData);
   svg.append("path")
       .attr("d", lineFunction(lineData))
       .attr("stroke", "blue")
-      .attr("opacity", "0.4")
+      // .attr("opacity", "0.4")
       .attr("stroke-width",3)
-      .attr("fill", "none");
+      .attr("fill", "none")
       // .attr("stroke-dasharray", "4,4")
+      ;
 }
 
 d3.json("simple.json", function(error, json) {
@@ -85,11 +93,11 @@ d3.json("simple.json", function(error, json) {
       .text(function(d) { return d.children ? null : d.name; });
 
   drawSvgElementLine("four", "five");
-  drawSvgElementLine("two","three");
-
-  drawSvgElementLine("one", "five");
-  drawSvgElementLine("two", "five");
-  drawSvgElementLine("three", "five");
+  // drawSvgElementLine("two","three");
+  //
+  // drawSvgElementLine("one", "five");
+  // drawSvgElementLine("two", "five");
+  // drawSvgElementLine("three", "five");
 
 });
 
