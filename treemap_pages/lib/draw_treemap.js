@@ -1,8 +1,14 @@
+function drawTreemapWithColor(svg, treemap, data) {
+  var  color = d3.scale.category20c();
+  drawTreemapB(svg, treemap, data, color);
+}
+
 function drawTreemap(svg, treemap, data) {
-  // var  color = d3.scale.category20c();
-  // var color = d3.scale.ordinal().range(["#000000","#444444"]);
-  // var color = d3.scale.ordinal().range(["#636363", "#bdbdbd", "#f0f0f0"]);
   var color = d3.scale.ordinal().range(["#111111","#222222", "#444444"]);
+  drawTreemapB(svg, treemap, data, color);
+}
+
+function drawTreemapB(svg, treemap, data, color) {
 
   var cell = svg.data([data]).selectAll("g")
       .data(treemap.nodes)
