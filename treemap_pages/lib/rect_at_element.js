@@ -55,53 +55,12 @@ function drawById(svg) {
 
 
 
-function drawOverlay(svg) {
+function drawOverlay(svg, data) {
 
   function getBBoxOfId(id) {
-    var svgElement = svg.select("#"+id.replace(/\//g,"_"));
+    var svgElement = svg.select("#"+id.replace(/\//g,"_").replace(/\./g,"_"));
     return svgElement[0][0].getBoundingClientRect();
   }
-
-  var data = [
-    {
-      "path" : "antragsuebersicht",
-      "type": "rect",
-      "borderColor": "red",
-      "border": 1,
-      "fillColor": "blue",
-      "fillOpacity": 0.5,
-      "label" : "antragsuebersicht",
-      "fontSize" : 20,
-      "fontColor" : "red"
-    },
-    {
-      "path" : "antragsuebersicht",
-      "type": "dot",
-      "borderColor": "red",
-      "border": 1,
-      "fillColor": "blue",
-      "fillOpacity": 0.5,
-      "width": 50,
-      "height": 25,
-      "label" : "hello",
-      "fontSize" : 20,
-      "fontColor" : "green"
-    },
-    {
-      "path" : "support",
-      "type": "dot",
-      "label" : "support"
-    },
-    {
-      "path" : "gateway",
-      "type": "rect",
-      "borderColor": "red",
-      "border": 4,
-      "fillColor": "blue",
-      "fillOpacity": 0.5,
-      "label" : ""
-    }
-  ];
 
   var root = svg.append("g")
       .attr("class", "root")

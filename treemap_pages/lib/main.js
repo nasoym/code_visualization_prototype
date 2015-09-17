@@ -29,9 +29,14 @@ if (treemapFile !== null) {
       drawTreemap(svg,treemap, json);
     }
 
-
-    drawOverlay(svg);
-
+    var overlayFile = querySt("overlay");
+    if (overlayFile !== null) {
+      console.log("overlayFile: " + overlayFile);
+      d3.json(overlayFile, function(error, json) {
+        if (error) throw error;
+        drawOverlay(svg, json);
+      });
+    }
 
     // var drawSvgElement = drawById(svg);
     // drawSvgElement("baufiSmart/backend/angebote");

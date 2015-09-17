@@ -14,7 +14,7 @@ function drawTreemapB(svg, treemap, data, color) {
       .data(treemap.nodes)
       .enter().append("g")
       .attr("class", "cell")
-      .attr("id", function(d) { return d.path.replace(/\//g,"_"); })
+      .attr("id", function(d) { return d.path.replace(/\//g,"_").replace(/\./g,"_"); })
       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
       ;
 
