@@ -29,20 +29,23 @@ if (treemapFile !== null) {
       drawTreemap(svg,treemap, json);
     }
 
-    var drawSvgElement = drawById(svg);
 
-    drawSvgElement("baufiSmart/backend/angebote");
-    //drawSvgElement("baufiSmart/api-rest");
+    drawOverlay(svg);
 
-    drawSvgElement("antragsuebersicht");
-    drawSvgElement("baufiSmart");
-    drawSvgElement("dokumentenverwaltung");
-    drawSvgElement("gateway");
-    drawSvgElement("infrastruktur");
-    drawSvgElement("partnermanagement");
-    drawSvgElement("support");
-    drawSvgElement("uebersicht");
-    drawSvgElement("vorgang");
+
+    // var drawSvgElement = drawById(svg);
+    // drawSvgElement("baufiSmart/backend/angebote");
+    // //drawSvgElement("baufiSmart/api-rest");
+    //
+    // drawSvgElement("antragsuebersicht");
+    // drawSvgElement("baufiSmart");
+    // drawSvgElement("dokumentenverwaltung");
+    // drawSvgElement("gateway");
+    // drawSvgElement("infrastruktur");
+    // drawSvgElement("partnermanagement");
+    // drawSvgElement("support");
+    // drawSvgElement("uebersicht");
+    // drawSvgElement("vorgang");
   });
 }
 else {
