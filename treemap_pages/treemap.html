@@ -13,20 +13,17 @@
   </style>
   <title></title>
 </head>
-<body>
-  <script src="d3.min.js" type="text/javascript"></script>
+<body style="padding:0;margin:0;">
+  <script src="lib/d3.min.js" type="text/javascript"></script>
+  <script src="lib/query.js" type="text/javascript"></script>
+  <script src="lib/rect_at_element.js" type="text/javascript"></script>
+  <script src="lib/draw_treemap.js" type="text/javascript"></script>
   <script type="text/javascript">
 
-var width = 700,
-  height = 700;
-
-// var  color = d3.scale.category20c();
-// var color = d3.scale.ordinal().range(["#000000","#444444"]);
-// var color = d3.scale.ordinal().range(["#636363", "#bdbdbd", "#f0f0f0"]);
-var color = d3.scale.ordinal().range(["#111111","#222222", "#444444"]);
+var width = 780;
+var height = 780;
 
 var treemap = d3.layout.treemap()
-  // .padding(3)
   .padding(1)
   .size([width, height])
   .value(function(d) { return d.size; })
@@ -36,186 +33,36 @@ var svg = d3.select("body").append("svg")
   .attr("width", width)
   .attr("height", height)
   .append("g")
-  // .style("background-color", 'red')
   ;
 
-// svg.append("rect")
-//     .attr("width", "100%")
-//     .attr("height", "100%")
-//     .attr("fill", "pink");
+var treemapFile = querySt("treemap");
+if (treemapFile !== null) {
+  console.log("treemapfile: " + treemapFile);
 
-function getSvgElementById(id) {
-  var svgElement = svg.select("#"+id.replace(/\//g,"_"));
-  return svgElement[0][0];
+  d3.json(treemapFile, function(error, json) {
+    if (error) throw error;
+    drawTreemap(svg,treemap, json);
+
+    var drawSvgElement = drawById(svg);
+
+    drawSvgElement("baufiSmart/backend/angebote");
+    //drawSvgElement("baufiSmart/api-rest");
+
+    drawSvgElement("antragsuebersicht");
+    drawSvgElement("baufiSmart");
+    drawSvgElement("dokumentenverwaltung");
+    drawSvgElement("gateway");
+    drawSvgElement("infrastruktur");
+    drawSvgElement("partnermanagement");
+    drawSvgElement("support");
+    drawSvgElement("uebersicht");
+    drawSvgElement("vorgang");
+  });
+}
+else {
+  console.log("no treemap query paramter is provided");
 }
 
-// function getPositionOfSvgId(id) {
-//   var svgElement = getSvgElementById(id);
-//   var x = svgElement.getBoundingClientRect().left
-//     + svgElement.getBoundingClientRect().width / 2;
-//   var y = svgElement.getBoundingClientRect().top
-//     + svgElement.getBoundingClientRect().height / 2;
-//   return { "x" : x, "y" : y};
-// }
-//
-// var lineFunction = d3.svg.line()
-//     .x(function(d) { return d.x; })
-//     .y(function(d) { return d.y; })
-//     .interpolate("linear");
-
-function drawSvgElement(id) {
-  var svgElement = getSvgElementById(id);
-  var boundingRect = svgElement.getBoundingClientRect();
-
-  var g = svg.append("g")
-      .attr("transform", "translate(" + boundingRect.left + "," + boundingRect.top + ")")
-      ;
-  g.append("rect")
-      .attr("width", boundingRect.width)
-      .attr("height", boundingRect.height)
-      .style("stroke", "red")
-      .style("stroke-width", 1)
-      .style("fill", "none")
-      ;
-  g.append("text")
-      .attr("x", 3)
-      .attr("y", 10)
-      .attr("dy", "0.35em")
-      .style("font-size", "10px")
-      .attr("text-anchor", "start")
-      .text(id)
-      .style("fill", "red")
-      ;
-  // cell.append("text")
-  //     // .attr("x", function(d) { return d.children ? 5 : d.dx / 2; })
-  //     // .attr("y", function(d) { return d.children ? 5 : d.dy / 2; })
-  //     .attr("x", function(d) { return d.children ? 0 : d.dx / 2; })
-  //     .attr("y", function(d) { return d.children ? 3 : d.dy / 2; })
-  //     .attr("dy", ".35em")
-  //     .style("font-size", function(d) { return d.children ? "5px": "12px";})
-  //     .attr("text-anchor", function(d) { return d.children ? "start": "middle";})
-  //     // .text(function(d) { return d.children ? d.name : d.name; })
-  //     .text(function(d) { return d.children ? d.name :null ; })
-  //     ;
-}
-
-
-
-// d3.json("examples2.json", function(error, json) {
-// d3.json("dummy.json", function(error, json) {
-// d3.json("data/ep2_with_size.json", function(error, json) {
-// d3.json("data/ep2_treemap_flatten_no_files.json", function(error, json) {
-// d3.json("data/ep2_treemap_flatten.json", function(error, json) {
-// d3.json("data/ep2_treemap.json", function(error, json) {
-d3.json("data/ep2_treemap_flatten.json", function(error, json) {
-  if (error) throw error;
-
-  var cell = svg.data([json]).selectAll("g")
-      .data(treemap.nodes)
-      .enter().append("g")
-      .attr("class", "cell")
-      .attr("id", function(d) { return d.path.replace(/\//g,"_"); })
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-      ;
-
-  cell.append("rect")
-      .attr("width", function(d) { return d.dx; })
-      .attr("height", function(d) { return d.dy; })
-      .style("fill", function(d) { 
-        if ( d.type == "file" ) {
-          // return "#444444";
-          /*
-          if (d.name.match(/\.java$/)) {
-            return "red";
-          }
-          else if (d.name.match(/\.xml$/)) {
-            return "green";
-          }
-          else if (d.name.match(/\.groovy$/)) {
-            return "pink";
-          }
-          return "blue";
-          */
-          return null;
-        }
-        else {
-          return color(d.name); 
-        }
-      })
-      // .style("fill", function(d) { return d.children ? color(d.name) : color(d.name); })
-      // .style("fill", function(d) { return d.children ? color(d.name) : null; })
-			// .style("stroke", "#000000")
-      .style("stroke", function(d) { 
-        if ( d.type == "file" ) {
-          return "#000000";
-        }
-        else {
-          return "#555555";
-          // return "yellow";
-        }
-      })
-			// .style("stroke", "blue")
-      // .style("stroke-width", 1)
-      .style("stroke-width", function(d) { 
-        if ( d.type == "file" ) {
-          return 1;
-        }
-        else {
-          return 1;
-        }
-      })
-      ;
-
-  // cell.append("text")
-  //     // .attr("x", function(d) { return d.children ? 5 : d.dx / 2; })
-  //     // .attr("y", function(d) { return d.children ? 5 : d.dy / 2; })
-  //     .attr("x", function(d) { return d.children ? 0 : d.dx / 2; })
-  //     .attr("y", function(d) { return d.children ? 3 : d.dy / 2; })
-  //     .attr("dy", ".35em")
-  //     .style("font-size", function(d) { return d.children ? "5px": "12px";})
-  //     .attr("text-anchor", function(d) { return d.children ? "start": "middle";})
-  //     // .text(function(d) { return d.children ? d.name : d.name; })
-  //     .text(function(d) { return d.children ? d.name :null ; })
-  //     ;
-
-
-      /*
-  drawSvgElement("antragsuebersicht");
-  // drawSvgElement("baufiSmart/backend/angebote");
-  // drawSvgElement("baufiSmart/backend");
-  drawSvgElement("baufiSmart");
-  drawSvgElement("uebersicht");
-  drawSvgElement("vorgang");
-  */
-
-
-  drawSvgElement("baufiSmart/backend/angebote");
-  //drawSvgElement("baufiSmart/api-rest");
-
-      /*
-  drawSvgElement("antragsuebersicht");
-  drawSvgElement("applikation");
-  drawSvgElement("applikation-tests");
-  drawSvgElement("archetypes");
-  drawSvgElement("baufiSmart");
-  drawSvgElement("baufismartstarter-model");
-  drawSvgElement("bin");
-  drawSvgElement("build-src");
-  drawSvgElement("config");
-  drawSvgElement("config-consul");
-  drawSvgElement("dokumentenverwaltung");
-  drawSvgElement("gateway");
-  drawSvgElement("infrastruktur");
-  drawSvgElement("lib");
-  drawSvgElement("messagechannel");
-  drawSvgElement("partnermanagement");
-  drawSvgElement("pom-prototypes");
-  drawSvgElement("support");
-  drawSvgElement("uebersicht");
-  drawSvgElement("vorgang");
-  */
-
-});
   </script>
 </body>
 </html>
