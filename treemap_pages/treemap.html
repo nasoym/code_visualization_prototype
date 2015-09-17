@@ -45,7 +45,7 @@ var svg = d3.select("body").append("svg")
 //     .attr("fill", "pink");
 
 function getSvgElementById(id) {
-  var svgElement = svg.select("#"+id);
+  var svgElement = svg.select("#"+id.replace(/\//g,"_"));
   return svgElement[0][0];
 }
 
@@ -78,14 +78,14 @@ function drawSvgElement(id) {
       .style("fill", "none")
       ;
   g.append("text")
-    .attr("x", 3)
-    .attr("y", 10)
-    .attr("dy", "0.35em")
-    .style("font-size", "10px")
-    .attr("text-anchor", "start")
-    .text(id)
-    .style("fill", "red")
-    ;
+      .attr("x", 3)
+      .attr("y", 10)
+      .attr("dy", "0.35em")
+      .style("font-size", "10px")
+      .attr("text-anchor", "start")
+      .text(id)
+      .style("fill", "red")
+      ;
   // cell.append("text")
   //     // .attr("x", function(d) { return d.children ? 5 : d.dx / 2; })
   //     // .attr("y", function(d) { return d.children ? 5 : d.dy / 2; })
@@ -105,6 +105,8 @@ function drawSvgElement(id) {
 // d3.json("dummy.json", function(error, json) {
 // d3.json("data/ep2_with_size.json", function(error, json) {
 // d3.json("data/ep2_treemap_flatten_no_files.json", function(error, json) {
+// d3.json("data/ep2_treemap_flatten.json", function(error, json) {
+// d3.json("data/ep2_treemap.json", function(error, json) {
 d3.json("data/ep2_treemap_flatten.json", function(error, json) {
   if (error) throw error;
 
@@ -112,7 +114,7 @@ d3.json("data/ep2_treemap_flatten.json", function(error, json) {
       .data(treemap.nodes)
       .enter().append("g")
       .attr("class", "cell")
-      .attr("id", function(d) { return d.path; })
+      .attr("id", function(d) { return d.path.replace(/\//g,"_"); })
       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
       ;
 
@@ -187,9 +189,10 @@ d3.json("data/ep2_treemap_flatten.json", function(error, json) {
   */
 
 
-  // drawSvgElement("baufiSmart/api-rest");
+  drawSvgElement("baufiSmart/backend/angebote");
+  //drawSvgElement("baufiSmart/api-rest");
 
-
+      /*
   drawSvgElement("antragsuebersicht");
   drawSvgElement("applikation");
   drawSvgElement("applikation-tests");
@@ -210,6 +213,7 @@ d3.json("data/ep2_treemap_flatten.json", function(error, json) {
   drawSvgElement("support");
   drawSvgElement("uebersicht");
   drawSvgElement("vorgang");
+  */
 
 });
   </script>
