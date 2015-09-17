@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+<body>
+  <script src="d3.min.js" type="text/javascript"></script>
+  <script src="lib/query.js" type="text/javascript"></script>
+  <script type="text/javascript">
+
+var treemap = querySt("treemap");
+if (treemap !== null) {
+  console.log("treemapfile: " + treemap);
+  d3.json(treemap, function(error, json) {
+    console.log("file loaded");
+    console.log(json);
+    console.log(JSON.stringify(json));
+  });
+}
+
+  </script>
+</body>
+</html>
