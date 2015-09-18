@@ -68,8 +68,10 @@ function drawOverlay(svg, data) {
 
   var defaultFontSize = 12;
   var defaultFontColor = "red";
+  var defaultFontOpacity = 1;
   var defaultBorderColor = "red";
   var defaultBorder = 1;
+  var defaultBorderOpacity = 1;
   var defaultFillColor = "none";
   var defaultFillOpacity = 1;
   var defaultWidth = 50;
@@ -114,6 +116,9 @@ function drawOverlay(svg, data) {
       .style("stroke-width", function(d) {
         return d.border ? d.border : defaultBorder;
       })
+      .style("stroke-opacity", function(d) {
+        return d.borderOpacity ? d.borderOpacity : defaultBorderOpacity;
+      })
       .style("fill", function(d) {
         return d.fillColor ? d.fillColor : defaultFillColor;
       }) 
@@ -147,8 +152,9 @@ function drawOverlay(svg, data) {
               .attr("dy", "0.35em")
               .style("font-size", fontSize + "px")
               .attr("text-anchor", anchor)
-              .text(d.label)
               .style("fill", d.fontColor ? d.fontColor : defaultFontColor)
+              .style("opacity", d.fontOpacity ? d.fontOpacity : defaultFontOpacity)
+              .text(d.label)
               ;
           }
         });
