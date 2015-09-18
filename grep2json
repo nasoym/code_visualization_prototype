@@ -1,3 +1,19 @@
 #!/bin/bash
 
-find . -name "*.java" | xargs grep --color -l "RemoteService" | sed -e 's/^\.\//"/g' -e 's/$/"/g' | jq -s 'map({path:.})' > ~/sinan/git_repos/code_visualization_prototype/treemap_pages/data/layer1.json
+FOLDER_PATH="$1"
+QUERY="$2"
+FILE="$3"
+
+echo "FOLDER_PATH: $FOLDER_PATH"
+echo "QUERY: $QUERY"
+echo "FILE: $FILE"
+
+cd $FOLDER_PATH
+find . -name "*.java" \
+  | xargs grep --color -l "$QUERY" \
+  | sed -e 's/^\.\//"/g' -e 's/$/"/g' \
+  | jq -s 'map({path:., borderColor:"blue"})' \
+  > $FILE
+
+
+
