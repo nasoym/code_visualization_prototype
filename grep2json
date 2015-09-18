@@ -1,0 +1,3 @@
+#!/bin/bash
+
+find . -name "*.java" | xargs grep --color -l "RemoteService" | sed -e 's/^\.\//"/g' -e 's/$/"/g' | jq -s 'map({path:.})' > ~/sinan/git_repos/code_visualization_prototype/treemap_pages/data/layer1.json
