@@ -29,13 +29,20 @@ if (treemapFile !== null) {
       drawTreemap(svg,treemap, json);
     }
 
-    var overlayFile = querySt("overlay");
-    if (overlayFile !== null) {
-      console.log("overlayFile: " + overlayFile);
-      d3.json(overlayFile, function(error, json) {
-        if (error) throw error;
-        drawOverlay(svg, json);
-      });
+    var overlayFiles = querySt("overlay");
+    if (overlayFiles !== null) {
+      console.log("overlayFiles: " + overlayFiles);
+
+      var overlayFileArray = overlayFiles.split(",");
+      for (i = 0; i < overlayFileArray.length; i++) {
+        var overlayFile = overlayFileArray[i];
+        console.log("overlayFile: " + overlayFile);
+        d3.json(overlayFile, function(error, json) {
+          if (error) throw error;
+          drawOverlay(svg, json);
+        });
+      }
+
     }
 
     // var drawSvgElement = drawById(svg);
