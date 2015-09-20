@@ -2,6 +2,9 @@ function drawTreemap(svg, treemap, data, config) {
 
   config.fileColorArray = d3.scale.ordinal().range(config.fileColorArray);
   config.folderColorArray = d3.scale.ordinal().range(config.folderColorArray);
+  for (i in config.fileColorMapping) {
+    config.fileColorMapping[i].color = d3.scale.ordinal().range(config.fileColorMapping[i].color);
+  }
 
   var cell = svg.data([data]).selectAll("g")
       .data(treemap.nodes)
@@ -26,7 +29,7 @@ function drawTreemap(svg, treemap, data, config) {
             var color = config.fileColorArray(d.name);
             for (i in config.fileColorMapping) {
               if (d.name.match(config.fileColorMapping[i].regex)) {
-                color = config.fileColorMapping[i].color;
+                color = config.fileColorMapping[i].color(d.name);
                 break;
               }
             }
