@@ -19,3 +19,6 @@ https://www.npmjs.com/package/gulp-json-tree
 ## npm packages
 * <https://www.npmjs.com/package/sync-exec>
 
+* <http://colorbrewer2.org/>
+
+
