@@ -1,60 +1,3 @@
-function drawById(svg) {
-
-  // var svg;
-
-  function getSvgElementById(id) {
-    var svgElement = svg.select("#"+id.replace(/\//g,"_"));
-    return svgElement[0][0];
-  }
-
-  // function getPositionOfSvgId(id) {
-  //   var svgElement = getSvgElementById(id);
-  //   var x = svgElement.getBoundingClientRect().left
-  //     + svgElement.getBoundingClientRect().width / 2;
-  //   var y = svgElement.getBoundingClientRect().top
-  //     + svgElement.getBoundingClientRect().height / 2;
-  //   return { "x" : x, "y" : y};
-  // }
-  //
-  // var lineFunction = d3.svg.line()
-  //     .x(function(d) { return d.x; })
-  //     .y(function(d) { return d.y; })
-  //     .interpolate("linear");
-
-  // function drawSvgElement(id) {
-  var drawSvgElement = function(id) {
-    var svgElement = getSvgElementById(id);
-    var boundingRect = svgElement.getBoundingClientRect();
-
-    var g = svg.append("g")
-        .attr("transform", "translate(" + boundingRect.left + "," + boundingRect.top + ")")
-        ;
-    g.append("rect")
-        .attr("width", boundingRect.width)
-        .attr("height", boundingRect.height)
-        .style("stroke", "red")
-        .style("stroke-width", 1)
-        .style("fill", "none")
-        ;
-    g.append("text")
-        .attr("x", 3)
-        .attr("y", 10)
-        .attr("dy", "0.35em")
-        .style("font-size", "10px")
-        .attr("text-anchor", "start")
-        .text(id)
-        .style("fill", "red")
-        ;
-  }
-
-  return drawSvgElement;
-
-};
-
-
-
-
-
 function drawOverlay(svg, data) {
 
   function getBBoxOfId(id) {
@@ -160,7 +103,4 @@ function drawOverlay(svg, data) {
         });
       })
       ;
-
 };
-
-

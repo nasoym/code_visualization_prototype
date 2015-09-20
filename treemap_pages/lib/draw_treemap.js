@@ -1,14 +1,7 @@
-function drawTreemapWithColor(svg, treemap, data) {
-  var  color = d3.scale.category20c();
-  drawTreemapB(svg, treemap, data, color);
-}
+function drawTreemap(svg, treemap, data, config) {
 
-function drawTreemap(svg, treemap, data) {
-  var color = d3.scale.ordinal().range(["#111111","#222222", "#444444"]);
-  drawTreemapB(svg, treemap, data, color);
-}
-
-function drawTreemapB(svg, treemap, data, color) {
+  var fileColor = d3.scale.ordinal().range(config.fileColorArray);
+  var folderColor = d3.scale.ordinal().range(config.folderColorArray);
 
   var cell = svg.data([data]).selectAll("g")
       .data(treemap.nodes)
@@ -23,7 +16,6 @@ function drawTreemapB(svg, treemap, data, color) {
       .attr("height", function(d) { return d.dy; })
       .style("fill", function(d) { 
         if ( d.type == "file" ) {
-          // return "#444444";
           /*
           if (d.name.match(/\.java$/)) {
             return "red";
@@ -34,49 +26,69 @@ function drawTreemapB(svg, treemap, data, color) {
           else if (d.name.match(/\.groovy$/)) {
             return "pink";
           }
-          return "blue";
           */
-          return null;
+          if (config.fileColorMode == null) {
+            return null;
+          }
+          else if (config.fileColorMode == "array") {
+            return fileColor(d.name); 
+          }
         }
-        else {
-          return color(d.name); 
+        else if ( d.type == "folder" ) {
+          if (config.folderColorMode == null) {
+            return null;
+          }
+          else if (config.folderColorMode == "array") {
+            return folderColor(d.name); 
+          }
         }
+        return null;
       })
-      // .style("fill", function(d) { return d.children ? color(d.name) : color(d.name); })
-      // .style("fill", function(d) { return d.children ? color(d.name) : null; })
-			// .style("stroke", "#000000")
       .style("stroke", function(d) { 
         if ( d.type == "file" ) {
-          return "#000000";
+          return config.fileStrokeColor;
         }
-        else {
-          return "#555555";
-          // return "yellow";
+        else if ( d.type == "folder" ) {
+          return config.folderStrokeColor;
         }
+        return null;
       })
-			// .style("stroke", "blue")
-      // .style("stroke-width", 1)
       .style("stroke-width", function(d) { 
         if ( d.type == "file" ) {
-          return 1;
+          return config.fileStrokeWidth;
         }
-        else {
-          return 1;
+        else if ( d.type == "folder" ) {
+          return config.folderStrokeWidth;
         }
+        return 0;
       })
       ;
 
-  // cell.append("text")
-  //     // .attr("x", function(d) { return d.children ? 5 : d.dx / 2; })
-  //     // .attr("y", function(d) { return d.children ? 5 : d.dy / 2; })
-  //     .attr("x", function(d) { return d.children ? 0 : d.dx / 2; })
-  //     .attr("y", function(d) { return d.children ? 3 : d.dy / 2; })
-  //     .attr("dy", ".35em")
-  //     .style("font-size", function(d) { return d.children ? "5px": "12px";})
-  //     .attr("text-anchor", function(d) { return d.children ? "start": "middle";})
-  //     // .text(function(d) { return d.children ? d.name : d.name; })
-  //     .text(function(d) { return d.children ? d.name :null ; })
-  //     ;
-
+  cell.call(function(selection) {
+    selection.each(function(d) {
+      if ( d.type == "file"  && config.fileLabel ) {
+        d3.select(this).append("text")
+          .attr("x", function(d) { return d.dx / 2; })
+          .attr("y", function(d) { return d.dy / 2; })
+          .attr("dy", ".35em")
+          .style("font-size", config.fileLabelFontSize + "px")
+          .style("fill", config.fileLabelFontColor)
+          .attr("text-anchor", "middle")
+          .text(function(d) { return d.name; })
+          ;
+      }
+      else if ( d.type == "folder" && config.folderLabel ) {
+        d3.select(this).append("text")
+          .attr("x", function(d) { return 1; })
+          .attr("y", function(d) { return config.folderLabelFontSize / 2; })
+          .attr("dy", ".35em")
+          .style("font-size", config.folderLabelFontSize + "px")
+          .style("fill", config.folderLabelFontColor)
+          .attr("text-anchor", "start")
+          .text(function(d) { return d.name; })
+          ;
+      }
+    });
+  });
 
 }
