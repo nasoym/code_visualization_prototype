@@ -44,7 +44,7 @@ function main() {
     .value(function(d) { return d.size; })
     ;
 
-  var svg = d3.select("body").append("svg")
+  var svg = d3.select("body").insert("svg", ":first-child")
     .attr("width", config.width)
     .attr("height", config.height)
     .append("g")

@@ -1,7 +1,7 @@
 function drawTreemap(svg, treemap, data, config) {
 
-  var fileColor = d3.scale.ordinal().range(config.fileColorArray);
-  var folderColor = d3.scale.ordinal().range(config.folderColorArray);
+  config.fileColorArray = d3.scale.ordinal().range(config.fileColorArray);
+  config.folderColorArray = d3.scale.ordinal().range(config.folderColorArray);
 
   var cell = svg.data([data]).selectAll("g")
       .data(treemap.nodes)
@@ -16,22 +16,21 @@ function drawTreemap(svg, treemap, data, config) {
       .attr("height", function(d) { return d.dy; })
       .style("fill", function(d) { 
         if ( d.type == "file" ) {
-          /*
-          if (d.name.match(/\.java$/)) {
-            return "red";
-          }
-          else if (d.name.match(/\.xml$/)) {
-            return "green";
-          }
-          else if (d.name.match(/\.groovy$/)) {
-            return "pink";
-          }
-          */
           if (config.fileColorMode == null) {
             return null;
           }
           else if (config.fileColorMode == "array") {
-            return fileColor(d.name); 
+            return config.fileColorArray(d.name); 
+          }
+          else if (config.fileColorMode == "regex") {
+            var color = config.fileColorArray(d.name);
+            for (i in config.fileColorMapping) {
+              if (d.name.match(config.fileColorMapping[i].regex)) {
+                color = config.fileColorMapping[i].color;
+                break;
+              }
+            }
+            return color;
           }
         }
         else if ( d.type == "folder" ) {
@@ -39,7 +38,7 @@ function drawTreemap(svg, treemap, data, config) {
             return null;
           }
           else if (config.folderColorMode == "array") {
-            return folderColor(d.name); 
+            return config.folderColorArray(d.name); 
           }
         }
         return null;
@@ -61,6 +60,9 @@ function drawTreemap(svg, treemap, data, config) {
           return config.folderStrokeWidth;
         }
         return 0;
+      })
+      .on("mousemove", function(d) {
+        d3.select("#tip")[0][0].textContent = d.path;
       })
       ;
 
