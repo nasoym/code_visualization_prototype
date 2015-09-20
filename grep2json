@@ -12,7 +12,7 @@ cd $FOLDER_PATH
 find . -name "*.java" \
   | xargs grep --color -l "$QUERY" \
   | sed -e 's/^\.\//"/g' -e 's/$/"/g' \
-  | jq -s 'map({path:., borderColor:"blue"})' \
+  | jq -s 'map({path:., borderColor:"#00ff00", fillColor:"#00ff00"})' \
   > $FILE
 
 
