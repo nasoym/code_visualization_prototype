@@ -2,7 +2,12 @@ function drawOverlay(svg, data) {
 
   function getBBoxOfId(id) {
     var svgElement = svg.select("#"+id.replace(/\//g,"_").replace(/\./g,"_"));
-    return svgElement[0][0].getBoundingClientRect();
+    if (svgElement != null && svgElement[0] != null && svgElement[0][0] != null ) {
+      return svgElement[0][0].getBoundingClientRect();
+    }
+    else {
+      return null;
+    }
   }
 
   var root = svg.append("g")
@@ -26,49 +31,56 @@ function drawOverlay(svg, data) {
       // .attr("class", "cell")
       // .attr("id", function(d) { return d.path; })
       ;
-  cell.append("rect")
-      .attr("transform", function(d) {
+    cell.call(function(selection) {
+      selection.each(function(d) {
         var bbox = getBBoxOfId(d.path);
-        if (d.type == "dot") {
-          var x = bbox.left + bbox.width / 2 - (d.width ? d.width : defaultWidth) / 2;
-          var y = bbox.top + bbox.height / 2 - (d.height ? d.height : defaultHeight) / 2;
-          return "translate(" + x + "," + y + ")";
-        }
-        // if (d.type == "rect") {
-        return "translate(" + bbox.left + "," + bbox.top + ")";
-      })
-      .attr("width", function(d) { 
-        var bbox = getBBoxOfId(d.path);
-        if (d.type == "dot") {
-          return d.width ? d.width : defaultWidth;
-        }
-        // if (d.type == "rect") {
-        return bbox.width;
-      })
-      .attr("height", function(d) { 
-        var bbox = getBBoxOfId(d.path);
-        if (d.type == "dot") {
-          return d.height ? d.height : defaultHeight;
-        }
-        // if (d.type == "rect") {
-        return bbox.height;
-      })
-      .style("stroke", function(d) {
-        return d.borderColor ? d.borderColor : defaultBorderColor;
-      })
-      .style("stroke-width", function(d) {
-        return d.border ? d.border : defaultBorder;
-      })
-      .style("stroke-opacity", function(d) {
-        return d.borderOpacity ? d.borderOpacity : defaultBorderOpacity;
-      })
-      .style("fill", function(d) {
-        return d.fillColor ? d.fillColor : defaultFillColor;
-      }) 
-      .style("opacity", function(d) {
-        return d.fillOpacity ? d.fillOpacity : defaultFillOpacity;
-      }) 
-      ;
+        if (bbox == null) { return ; }
+        d3.select(this).append("rect")
+          .attr("transform", function(d) {
+            var bbox = getBBoxOfId(d.path);
+            if (d.type == "dot") {
+              var x = bbox.left + bbox.width / 2 - (d.width ? d.width : defaultWidth) / 2;
+              var y = bbox.top + bbox.height / 2 - (d.height ? d.height : defaultHeight) / 2;
+              return "translate(" + x + "," + y + ")";
+            }
+            // if (d.type == "rect") {
+            return "translate(" + bbox.left + "," + bbox.top + ")";
+          })
+          .attr("width", function(d) { 
+            var bbox = getBBoxOfId(d.path);
+            if (d.type == "dot") {
+              return d.width ? d.width : defaultWidth;
+            }
+            // if (d.type == "rect") {
+            return bbox.width;
+          })
+          .attr("height", function(d) { 
+            var bbox = getBBoxOfId(d.path);
+            if (d.type == "dot") {
+              return d.height ? d.height : defaultHeight;
+            }
+            // if (d.type == "rect") {
+            return bbox.height;
+          })
+          .style("stroke", function(d) {
+            return d.borderColor ? d.borderColor : defaultBorderColor;
+          })
+          .style("stroke-width", function(d) {
+            return d.border ? d.border : defaultBorder;
+          })
+          .style("stroke-opacity", function(d) {
+            return d.borderOpacity ? d.borderOpacity : defaultBorderOpacity;
+          })
+          .style("fill", function(d) {
+            return d.fillColor ? d.fillColor : defaultFillColor;
+          }) 
+          .style("opacity", function(d) {
+            return d.fillOpacity ? d.fillOpacity : defaultFillOpacity;
+          }) 
+          ;
+
+        });
+      });
 
     cell.call(function(selection) {
         selection.each(function(d) {
