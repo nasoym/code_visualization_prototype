@@ -1,6 +1,9 @@
 function drawOverlay(svg, data) {
 
   function getBBoxOfId(id) {
+    if (id == null) {
+      return;
+    }
     var svgElement = svg.select("#"+id.replace(/\//g,"_").replace(/\./g,"_"));
     if (svgElement != null && svgElement[0] != null && svgElement[0][0] != null ) {
       return svgElement[0][0].getBoundingClientRect();
